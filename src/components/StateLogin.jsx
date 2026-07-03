@@ -6,11 +6,30 @@ export default function Login() {
         password: '',
     });
 
-    function onFormChange(field, event) {
+    const [isEdited, setIsEdited] = useState({
+        email: false,
+        password: false,
+    });
+
+    let isNotValidEmail = isEdited.email && !enteredForm.email.includes('@');
+
+    function onFormChange(inputIdentifier, event) {
         setEnteredForm(prev => ({
             ...prev,
-            [field]: event.target.value
+            [inputIdentifier]: event.target.value
         }));
+
+        setIsEdited(prev => ({
+            ...prev,
+            [inputIdentifier]: false,
+        }));
+    }
+
+    function onInputBlur(inputIdentifier) {
+        setIsEdited({
+            ...isEdited,
+            [inputIdentifier]: true,
+        });
     }
 
     function onLogin(event) {
@@ -29,9 +48,13 @@ export default function Login() {
                         id="email"
                         type="email"
                         name="email"
+                        onBlur={() => onInputBlur('email')}
                         onChange={(event) => onFormChange('email', event)}
                         value={enteredForm.email}
                     />
+                    <div className="control-error">
+                        {isNotValidEmail && <p>Please, enter valid email</p>}
+                    </div>
                 </div>
 
                 <div className="control no-margin">
