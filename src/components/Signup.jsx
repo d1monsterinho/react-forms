@@ -13,7 +13,7 @@ export default function Signup() {
     });
 
     let passwordsDoNotMatch = (!isEditingPasswords.password && !isEditingPasswords['password-confirm'])
-        && isEqualsToOtherValue(passwords.password, passwords['password-confirm']);
+        && !isEqualsToOtherValue(passwords.password, passwords['password-confirm']);
 
     function handlePasswordBlur(identifier) {
         setIsEditingPasswords(prev => ({

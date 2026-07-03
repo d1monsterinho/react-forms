@@ -13,8 +13,8 @@ export default function Login() {
         password: false,
     });
 
-    const isNotValidEmail = isEdited.email && isEmail(enteredForm.email);
-    const isNotValidPassword = isEdited.password && hasMinLength(enteredForm.password, 6);
+    const isNotValidEmail = isEdited.email && !isEmail(enteredForm.email);
+    const isNotValidPassword = isEdited.password && !hasMinLength(enteredForm.password, 6);
 
     function onFormChange(inputIdentifier, event) {
         setEnteredForm(prev => ({

@@ -12,7 +12,7 @@ export default function Login() {
 
         const email = emailRef.current.value;
 
-        if (isEmail(email)) {
+        if (!isEmail(email)) {
             setIsInvalidEmail(true);
             return;
         }
