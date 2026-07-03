@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {isEqualsToOtherValue} from "../util/validation.js";
 
 export default function Signup() {
     const [passwords, setPasswords] = useState({
@@ -12,7 +13,7 @@ export default function Signup() {
     });
 
     let passwordsDoNotMatch = (!isEditingPasswords.password && !isEditingPasswords['password-confirm'])
-        && passwords.password !== passwords["password-confirm"];
+        && isEqualsToOtherValue(passwords.password, passwords['password-confirm']);
 
     function handlePasswordBlur(identifier) {
         setIsEditingPasswords(prev => ({

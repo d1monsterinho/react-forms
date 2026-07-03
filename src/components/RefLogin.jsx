@@ -1,4 +1,5 @@
 import {useRef, useState} from "react";
+import {isEmail} from "../util/validation.js";
 
 export default function Login() {
     const emailRef = useRef();
@@ -11,7 +12,7 @@ export default function Login() {
 
         const email = emailRef.current.value;
 
-        if (!email.includes('@')) {
+        if (isEmail(email)) {
             setIsInvalidEmail(true);
             return;
         }

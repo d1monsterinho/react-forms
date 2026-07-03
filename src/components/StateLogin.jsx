@@ -1,4 +1,6 @@
 import {useState} from "react";
+import Input from "./Input.jsx";
+import {hasMinLength, isEmail} from "../util/validation.js";
 
 export default function Login() {
     const [enteredForm, setEnteredForm] = useState({
@@ -11,7 +13,8 @@ export default function Login() {
         password: false,
     });
 
-    let isNotValidEmail = isEdited.email && !enteredForm.email.includes('@');
+    const isNotValidEmail = isEdited.email && isEmail(enteredForm.email);
+    const isNotValidPassword = isEdited.password && hasMinLength(enteredForm.password, 6);
 
     function onFormChange(inputIdentifier, event) {
         setEnteredForm(prev => ({
@@ -42,31 +45,27 @@ export default function Login() {
             <h2>Login</h2>
 
             <div className="control-row">
-                <div className="control no-margin">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        onBlur={() => onInputBlur('email')}
-                        onChange={(event) => onFormChange('email', event)}
-                        value={enteredForm.email}
-                    />
-                    <div className="control-error">
-                        {isNotValidEmail && <p>Please, enter valid email</p>}
-                    </div>
-                </div>
+                <Input
+                    label="Email"
+                    id="email"
+                    error={isNotValidEmail && 'Please, enter valid email'}
+                    type="email"
+                    name="email"
+                    onBlur={() => onInputBlur('email')}
+                    onChange={(event) => onFormChange('email', event)}
+                    value={enteredForm.email}
+                />
 
-                <div className="control no-margin">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        name="password"
-                        onChange={(event) => onFormChange('password', event)}
-                        value={enteredForm.password}
-                    />
-                </div>
+                <Input
+                    label="Password"
+                    id="password"
+                    error={isNotValidPassword && 'Password must contain at least 6 characters'}
+                    type="password"
+                    name="password"
+                    onBlur={() => onInputBlur('password')}
+                    onChange={(event) => onFormChange('password', event)}
+                    value={enteredForm.password}
+                />
             </div>
 
             <p className="form-actions">
